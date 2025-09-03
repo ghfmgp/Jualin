@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kantin Lavender</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; background: #fff8e1; padding: 20px; }
+    h1 { text-align: center; color: #d35400; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #555; padding: 6px; text-align: center; }
+    th { background: #ffe0b2; }
+    input { width: 80px; text-align: center; }
+    .summary { margin-top: 20px; font-weight: bold; }
+    .controls { margin: 15px 0; }
+    .controls input { margin: 5px 0; padding: 5px; }
+    button { padding: 8px 14px; margin-top: 10px; cursor: pointer; background: #27ae60; color: white; border: none; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>KANTIN LAVENDER</h1>
+
+  <div class="controls">
+    <label>Nama Kantin: <input type="text" id="kantin" value="KANTIN LAVENDER"></label><br>
+    <label>Tanggal: <input type="date" id="tanggal"></label><br>
+    <label>Nama Petugas 1: <input type="text" id="petugas1" value="I. Eka Widhi"></label><br>
+    <label>Nama Petugas 2: <input type="text" id="petugas2" value="Farly Achmad"></label><br>
+    <label>Modal Awal: <input type="number" id="modalAwal" value="20000"></label>
+  </div>
+
+  <table id="tabel">
+    <thead>
+      <tr>
+        <th>MENU</th>
+        <th>Persediaan Awal</th>
+        <th>Persediaan Akhir</th>
+        <th>Barang Terjual</th>
+        <th>HPP/buah</th>
+        <th>Harga jual/buah</th>
+        <th>Total HPP</th>
+        <th>Total Penjualan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Contoh menu -->
+      <tr>
+        <td><input value="Siomay"></td>
+        <td><input type="number" value="50" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="10" oninput="hitung()"></td>
+        <td><input type="number" value="4500" oninput="hitung()"></td>
+        <td><input type="number" value="5000" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Dimsum"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Batagor"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Risol Mayones"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Cireng"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Basreng"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td><input type="number" value="0" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>  
+      </tr>
+      <tr>
+        <td><input value="Pangsit Chili Oil"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Baso Mercon"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>  
+      </tr>
+      <tr>
+        <td><input value="Risol Ayam"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>  
+      </tr>
+      <tr>
+        <td><input value="Risol Margo"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>  
+      </tr>
+      <tr>
+        <td><input value="Nasi Kepal"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>    
+      <tr>
+        <td><input value="Rebusan"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>
+      <tr>
+        <td><input value="Biji Ketapang"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>  
+      </tr>
+      <tr>
+        <td><input value="Kue Bawang"></td>
+        <td><input type="number" value="30" oninput="hitung()"></td>
+        <td class="akhir">0</td>
+        <td><input type="number" value="5" oninput="hitung()"></td>
+        <td><input type="number" value="2000" oninput="hitung()"></td>
+        <td><input type="number" value="2500" oninput="hitung()"></td>
+        <td class="totalHpp">0</td>
+        <td class="totalJual">0</td>
+      </tr>  
+    </tbody>
+    <tfoot>
+      <tr>
+        <th colspan="6">TOTAL</th>
+        <th id="totalHpp">0</th>
+        <th id="totalJual">0</th>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div class="summary">
+    <p>Keuntungan: <span id="keuntungan">0</span></p>
+  </div>
+
+  <button onclick="exportExcel()">Export ke Excel</button>
+
+  <script>
+    function hitung() {
+      let rows = document.querySelectorAll("#tabel tbody tr");
+      let totalHpp = 0, totalJual = 0;
+
+      rows.forEach(row => {
+        let awal = parseInt(row.cells[1].children[0].value) || 0;
+        let terjual = parseInt(row.cells[3].children[0].value) || 0;
+        let hpp = parseInt(row.cells[4].children[0].value) || 0;
+        let harga = parseInt(row.cells[5].children[0].value) || 0;
+
+        let akhir = awal - terjual;
+        let tHpp = terjual * hpp;
+        let tJual = terjual * harga;
+
+        row.querySelector(".akhir").textContent = akhir;
+        row.querySelector(".totalHpp").textContent = tHpp;
+        row.querySelector(".totalJual").textContent = tJual;
+
+        totalHpp += tHpp;
+        totalJual += tJual;
+      });
+
+      document.getElementById("totalHpp").textContent = totalHpp;
+      document.getElementById("totalJual").textContent = totalJual;
+      document.getElementById("keuntungan").textContent = totalJual - totalHpp;
+    }
+
+    function exportExcel() {
+      let wb = XLSX.utils.book_new();
+      let ws_data = [];
+
+      ws_data.push([document.getElementById("kantin").value]);
+      ws_data.push([]);
+      ws_data.push(["Tanggal", document.getElementById("tanggal").value]);
+      ws_data.push(["Nama Petugas:", document.getElementById("petugas1").value, document.getElementById("petugas2").value]);
+      ws_data.push([]);
+
+      // header
+      ws_data.push(["MENU","Persediaan Awal","Persediaan Akhir","Barang Terjual","HPP/buah","Harga jual/buah","Total HPP","Total Penjualan"]);
+
+      let rows = document.querySelectorAll("#tabel tbody tr");
+      rows.forEach(row => {
+        ws_data.push([
+          row.cells[0].children[0].value,
+          row.cells[1].children[0].value,
+          row.querySelector(".akhir").textContent,
+          row.cells[3].children[0].value,
+          row.cells[4].children[0].value,
+          row.cells[5].children[0].value,
+          row.querySelector(".totalHpp").textContent,
+          row.querySelector(".totalJual").textContent
+        ]);
+      });
+
+      // TOTAL hanya HPP & Penjualan
+      ws_data.push(["","","","","","TOTAL", 
+                    document.getElementById("totalHpp").textContent, 
+                    document.getElementById("totalJual").textContent]);
+
+      ws_data.push([]);
+      ws_data.push(["Keuntungan", document.getElementById("keuntungan").textContent]);
+      ws_data.push(["Modal Awal", document.getElementById("modalAwal").value]);
+
+      let ws = XLSX.utils.aoa_to_sheet(ws_data);
+      XLSX.utils.book_append_sheet(wb, ws, "Rekap Penjualan");
+      XLSX.writeFile(wb, "Rekap-Kantin.xlsx");
+    }
+
+    // hitung pertama kali
+    hitung();
+  </script>
+</body>
+</html>
